@@ -16,19 +16,24 @@ This project is built with scalability in mind. Rather than being a simple PDF v
 
 ---
 
-# Vision
+## Documentation
 
-Create a professional reference workspace that feels like a native Adobe panel while leveraging modern web technologies.
-
-The long-term goal is to eliminate unnecessary context switching during creative workflows and provide creators with a centralized environment for viewing documentation, storyboards, design references, notes, and production assets.
+| Document | Description |
+|----------|-------------|
+| [Project Vision](docs/PROJECT_VISION.md) | Vision, philosophy, and core principles |
+| [Roadmap](docs/ROADMAP.md) | Development phases & current status |
+| [Architecture](docs/ARCHITECTURE.md) | Tech stack & system design |
+| [UI Blueprint](docs/UI_BLUEPRINT.md) | UI/UX design specifications |
+| [Development Rules](docs/DEVELOPMENT_RULES.md) | Coding standards & conventions |
+| [Changelog](docs/CHANGELOG.md) | Version history & notable changes |
+| [Contributing](docs/CONTRIBUTING.md) | How to contribute |
+| [Phase Tracker](docs/PHASE.md) | Detailed phase progress tracking |
 
 ---
 
-# Project Status
+## Project Status
 
 > 🚧 Early Development (Phase 1)
-
-Current progress:
 
 * ✅ Project initialization
 * ✅ Repository structure
@@ -39,172 +44,57 @@ Current progress:
 * ⏳ PDF Rendering Engine
 * ⏳ Adobe Bridge Integration
 
----
-
-# Development Roadmap
-
-## Phase 0 — Research
-
-* User experience research
-* Architecture planning
-* Blueprint creation
-* Technical evaluation
-
-## Phase 1 — Project Initialization
-
-* Project setup
-* React + TypeScript
-* Vite configuration
-* CEP configuration
-* Development workflow
-
-## Phase 2 — UI Prototype
-
-* Header
-* Sidebar
-* Workspace
-* Toolbar
-* Footer
-* Theme System
-
-## Phase 3 — Core Architecture
-
-* Core services
-* Event Bus
-* Storage Manager
-* Theme Manager
-* Configuration Manager
-
-## Phase 4 — PDF Engine
-
-* PDF.js integration
-* Page rendering
-* Zoom
-* Search
-* Navigation
-* Thumbnail generation
-
-## Phase 5 — Adobe Integration
-
-* CSInterface
-* ExtendScript Bridge
-* Session synchronization
-* Project integration
-
-## Phase 6 — Storage
-
-* Recent files
-* Bookmarks
-* Preferences
-* Workspace persistence
-
-## Phase 7 — Settings
-
-* Appearance
-* Performance
-* Viewer configuration
-
-## Phase 8 — Optimization
-
-* Performance improvements
-* Memory optimization
-* Lazy loading
-* Render optimization
-
-## Phase 9 — Packaging
-
-* Production build
-* ZXP packaging
-* Testing
-* Release
+See [Roadmap](docs/ROADMAP.md) for full details.
 
 ---
 
-# Planned Features
-
-### PDF Workspace
-
-* Open PDF documents
-* Multi-page navigation
-* Thumbnail sidebar
-* Search inside PDF
-* Zoom controls
-* Fit page
-* Fit width
-* Recent documents
-* Bookmarks
-* Session restore
-
-### Future Modules
-
-This project is designed with a modular architecture, making it easy to expand in the future.
-
-Planned modules include:
-
-* Image Viewer
-* Notes
-* Bookmark Manager
-* Asset Browser
-* Font Preview
-* Color Palette
-* Reference Library
-
----
-
-# Technology Stack
+## Technology Stack
 
 * React
 * TypeScript
 * Vite
 * CEP (Adobe Common Extensibility Platform)
 * ExtendScript
-* PDF.js
-* Tailwind CSS
+* PDF.js (planned)
+* Tailwind CSS (planned)
+
+See [Architecture](docs/ARCHITECTURE.md) for full details.
 
 ---
 
-# Architecture
+## Quick Start
 
-```text
-Adobe After Effects
-        │
-        ▼
-CEP Extension (.zxp)
-        │
-        ▼
-React Application
-        │
-        ▼
-Core Services
-        │
-        ▼
-CSInterface Bridge
-        │
-        ▼
-ExtendScript
-        │
-        ▼
-Adobe After Effects API
+### Prerequisites
+
+- Node.js (v18+)
+- npm
+- Adobe After Effects 2020+
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Catchya-Sama/AE-PDF-Viewer.git
+cd AE-PDF-Viewer
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Copy to CEP extensions folder
+npm run copy-cep
 ```
 
----
+### Usage
 
-# Project Philosophy
-
-This project is not intended to become just another PDF viewer.
-
-It is being developed as a scalable platform for building modern Adobe extensions that integrate seamlessly into creative workflows while maintaining a clean architecture, reusable components, and long-term maintainability.
+1. Open After Effects
+2. Go to `Window > Extensions > PDF Viewer`
+3. For debugging, open `http://localhost:8088` in a browser
 
 ---
 
-# Contributing
-
-The project is currently under active development.
-
-Suggestions, feedback, feature requests, and contributions are always welcome.
-
----
-
-# License
+## License
 
 This project is released under the MIT License unless stated otherwise.
