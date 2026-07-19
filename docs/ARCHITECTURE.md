@@ -83,6 +83,14 @@ Modular singleton services in `src/services/`:
   - Methods: `get(key)`, `set(key, value)`, `getAll()`, `update(updates)`, `reset()`
   - Merges `DEFAULT_CONFIG` with saved user preferences
 
+- **PdfManager** (`pdfManager.ts`) — PDF.js wrapper for PDF rendering (Phase 4 ✅)
+  - Uses PDF.js v2.16.105 (legacy build for CEP 9 / Chromium 57)
+  - Methods: `loadDocument(filePath, fileName)`, `renderPage(pageNum, canvas, scale)`, `generateThumbnail(pageNum, maxWidth)`, `search(query)`, `getPageDimensions(pageNum)`, `closeDocument()`, `hasDocument()`, `getDocumentInfo()`
+  - Reads PDF as ArrayBuffer via fetch/XHR
+  - Renders pages to `<canvas>` elements
+  - Generates thumbnail data URLs for sidebar
+  - Full-text search across all pages
+
 ### 5. CSInterface Bridge
 The communication layer between React (web) and ExtendScript (host). Uses `CSInterface.evalScript()` to call ExtendScript functions.
 

@@ -8,17 +8,20 @@ import { themeManager } from './services/themeManager';
 import { configManager } from './services/configManager';
 import { eventBus, EVENTS } from './services/eventBus';
 import { storageManager } from './services/storageManager';
+import { pdfManager } from './services/pdfManager';
 
 function App() {
-  // Theme state — now managed by themeManager
+  // Theme state — managed by themeManager
   const [theme, setTheme] = useState(themeManager.getTheme());
 
-  // Document state (dummy for Phase 2/3)
+  // Document state
   const [hasDocument, setHasDocument] = useState(false);
   const [documentName, setDocumentName] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(configManager.get('defaultZoom'));
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Host info state (from Phase 1)
   const [hostInfo, setHostInfo] = useState('Connecting...');
@@ -61,20 +64,68 @@ function App() {
     }
   }, []);
 
-  // Dummy handlers for Phase 2/3
-  const handleOpen = () => {
-    // Phase 4: Will open file dialog and load PDF
-    setHasDocument(true);
-    setDocumentName('sample.pdf');
-    setTotalPages(5);
-    setCurrentPage(1);
-    setZoomLevel(configManager.get('defaultZoom'));
+  // Open file dialog and load PDF
+  const handleOpen = async () => {
+    try {
+      setError(null);
+      setIsLoading(true);
 
-    // Emit event for other components
-    eventBus.emit(EVENTS.DOCUMENT_OPENED, { name: 'sample.pdf', pages: 5 });
+      // Use CEP file dialog via CSInterface
+      let filePath = '';
+      let fileName = '';
 
-    // Save to recent files
-    storageManager.addRecentFile('/dummy/sample.pdf', 'sample.pdf');
+      // @ts-ignore
+      if (typeof CSInterface !== 'undefined') {
+        // @ts-ignore
+        const cs = new CSInterface();
+
+        // Use ExtendScript to open file dialog
+        const script = `
+          var file = File.openDialog("Select PDF File", "*.pdf", false);
+          if (file) {
+            file.fsName + "|" + file.name;
+          } else {
+            "";
+          }
+        `;
+
+        const result = await new Promise<string>((resolve) => {
+          // @ts-ignore
+          cs.evalScript(script, resolve);
+        });
+
+        if (result && result !== 'EvalScript error.') {
+          const parts = result.split('|');
+          filePath = parts[0] || '';
+          fileName = parts[1] || '';
+        }
+      }
+
+      if (!filePath) {
+        setIsLoading(false);
+        return;
+      }
+
+      // Convert Windows path to file:// URL for fetch
+      const fileUrl = 'file:///' + filePath.replace(/\\/g, '/').replace(/^\//, '');
+
+      // Load PDF with pdfManager
+      const info = await pdfManager.loadDocument(fileUrl, fileName);
+
+      setHasDocument(true);
+      setDocumentName(info.fileName);
+      setTotalPages(info.numPages);
+      setCurrentPage(1);
+      setZoomLevel(configManager.get('defaultZoom'));
+
+      // Save to recent files
+      storageManager.addRecentFile(filePath, fileName);
+    } catch (e) {
+      console.error('App: Error opening PDF', e);
+      setError(String(e));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleZoomIn = () => {
@@ -128,6 +179,10 @@ function App() {
 
   const handleSearch = (query: string) => {
     eventBus.emit(EVENTS.SEARCH_QUERY, query);
+    // Actual search will be handled by pdfManager
+    if (hasDocument && query.trim()) {
+      pdfManager.search(query).catch(console.error);
+    }
   };
 
   const handleToggleTheme = () => {
@@ -159,9 +214,10 @@ function App() {
         />
         <Workspace
           hasDocument={hasDocument}
-          documentName={documentName}
           currentPage={currentPage}
-          totalPages={totalPages}
+          zoomLevel={zoomLevel}
+          isLoading={isLoading}
+          error={error}
         />
       </div>
       <Footer

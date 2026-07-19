@@ -1,16 +1,40 @@
+import { useRef, useEffect } from 'react';
+import { pdfManager } from '../services/pdfManager';
+
 interface WorkspaceProps {
   hasDocument?: boolean;
-  documentName?: string;
   currentPage?: number;
-  totalPages?: number;
+  zoomLevel?: number;
+  isLoading?: boolean;
+  error?: string | null;
 }
 
 export function Workspace({
   hasDocument = false,
-  documentName = '',
   currentPage = 0,
-  totalPages = 0,
+  zoomLevel = 100,
+  isLoading = false,
+  error = null,
 }: WorkspaceProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Render page when currentPage or zoomLevel changes
+  useEffect(() => {
+    if (!hasDocument || !canvasRef.current || currentPage === 0) return;
+
+    const renderPage = async () => {
+      try {
+        const scale = zoomLevel / 100;
+        await pdfManager.renderPage(currentPage, canvasRef.current!, scale);
+      } catch (e) {
+        console.error('Workspace: Render error', e);
+      }
+    };
+
+    renderPage();
+  }, [hasDocument, currentPage, zoomLevel]);
+
+  // Empty state — no document loaded
   if (!hasDocument) {
     return (
       <div className="app-workspace">
@@ -27,17 +51,50 @@ export function Workspace({
     );
   }
 
-  return (
-    <div className="app-workspace">
-      <div className="workspace-empty">
-        <div className="workspace-empty-icon">📄</div>
-        <div className="workspace-empty-text">
-          {documentName}
-        </div>
-        <div className="workspace-empty-hint">
-          Page {currentPage} of {totalPages} — PDF rendering will be integrated in Phase 4
+  // Error state
+  if (error) {
+    return (
+      <div className="app-workspace">
+        <div className="workspace-empty">
+          <div className="workspace-empty-icon">⚠</div>
+          <div className="workspace-empty-text">
+            Error loading document
+          </div>
+          <div className="workspace-empty-hint">
+            {error}
+          </div>
         </div>
       </div>
+    );
+  }
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="app-workspace">
+        <div className="workspace-empty">
+          <div className="workspace-empty-icon">⏳</div>
+          <div className="workspace-empty-text">
+            Loading document...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Document loaded — render canvas
+  return (
+    <div className="app-workspace">
+      <canvas
+        ref={canvasRef}
+        style={{
+          maxWidth: '100%',
+          maxHeight: '100%',
+          objectFit: 'contain',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          background: '#fff',
+        }}
+      />
     </div>
   );
 }
