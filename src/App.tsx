@@ -4,25 +4,32 @@ import { Sidebar } from './components/Sidebar';
 import { Toolbar } from './components/Toolbar';
 import { Workspace } from './components/Workspace';
 import { Footer } from './components/Footer';
+import { themeManager } from './services/themeManager';
+import { configManager } from './services/configManager';
+import { eventBus, EVENTS } from './services/eventBus';
+import { storageManager } from './services/storageManager';
 
 function App() {
-  // Theme state
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  // Theme state — now managed by themeManager
+  const [theme, setTheme] = useState(themeManager.getTheme());
 
-  // Document state (dummy for Phase 2)
+  // Document state (dummy for Phase 2/3)
   const [hasDocument, setHasDocument] = useState(false);
   const [documentName, setDocumentName] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [zoomLevel, setZoomLevel] = useState(100);
+  const [zoomLevel, setZoomLevel] = useState(configManager.get('defaultZoom'));
 
   // Host info state (from Phase 1)
   const [hostInfo, setHostInfo] = useState('Connecting...');
 
+  // Subscribe to theme changes from themeManager
   useEffect(() => {
-    // Apply theme to document
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    const unsubscribe = eventBus.on(EVENTS.THEME_CHANGED, (newTheme: 'dark' | 'light') => {
+      setTheme(newTheme);
+    });
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     // Ping the ExtendScript host bridge
@@ -54,46 +61,77 @@ function App() {
     }
   }, []);
 
-  // Dummy handlers for Phase 2
+  // Dummy handlers for Phase 2/3
   const handleOpen = () => {
     // Phase 4: Will open file dialog and load PDF
     setHasDocument(true);
     setDocumentName('sample.pdf');
     setTotalPages(5);
     setCurrentPage(1);
-    setZoomLevel(100);
+    setZoomLevel(configManager.get('defaultZoom'));
+
+    // Emit event for other components
+    eventBus.emit(EVENTS.DOCUMENT_OPENED, { name: 'sample.pdf', pages: 5 });
+
+    // Save to recent files
+    storageManager.addRecentFile('/dummy/sample.pdf', 'sample.pdf');
   };
 
   const handleZoomIn = () => {
-    setZoomLevel((z) => Math.min(z + 25, 400));
+    const maxZoom = configManager.get('maxZoom');
+    const step = configManager.get('zoomStep');
+    setZoomLevel((z) => {
+      const newZoom = Math.min(z + step, maxZoom);
+      eventBus.emit(EVENTS.ZOOM_CHANGED, newZoom);
+      return newZoom;
+    });
   };
 
   const handleZoomOut = () => {
-    setZoomLevel((z) => Math.max(z - 25, 25));
+    const minZoom = configManager.get('minZoom');
+    const step = configManager.get('zoomStep');
+    setZoomLevel((z) => {
+      const newZoom = Math.max(z - step, minZoom);
+      eventBus.emit(EVENTS.ZOOM_CHANGED, newZoom);
+      return newZoom;
+    });
   };
 
-  const handleZoomFit = () => setZoomLevel(100);
+  const handleZoomFit = () => {
+    const defaultZoom = configManager.get('defaultZoom');
+    setZoomLevel(defaultZoom);
+    eventBus.emit(EVENTS.ZOOM_CHANGED, defaultZoom);
+  };
+
   const handleZoomWidth = () => setZoomLevel(150);
 
   const handlePrevPage = () => {
-    setCurrentPage((p) => Math.max(p - 1, 1));
+    setCurrentPage((p) => {
+      const newPage = Math.max(p - 1, 1);
+      eventBus.emit(EVENTS.PAGE_CHANGED, newPage);
+      return newPage;
+    });
   };
 
   const handleNextPage = () => {
-    setCurrentPage((p) => Math.min(p + 1, totalPages));
+    setCurrentPage((p) => {
+      const newPage = Math.min(p + 1, totalPages);
+      eventBus.emit(EVENTS.PAGE_CHANGED, newPage);
+      return newPage;
+    });
   };
 
   const handlePageSelect = (page: number) => {
     setCurrentPage(page);
+    eventBus.emit(EVENTS.PAGE_CHANGED, page);
   };
 
   const handleSearch = (query: string) => {
-    // Phase 4: Will search in PDF
-    console.log('Search:', query);
+    eventBus.emit(EVENTS.SEARCH_QUERY, query);
   };
 
   const handleToggleTheme = () => {
-    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+    themeManager.toggleTheme();
   };
 
   return (

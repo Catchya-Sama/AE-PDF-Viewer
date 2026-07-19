@@ -61,12 +61,27 @@ The UI layer. Built with React + TypeScript + Vite. Handles:
 - State management
 - Theme system
 
-### 4. Core Services
-Planned modular services (Phase 3):
-- **Event Bus** — Cross-module communication
-- **Storage Manager** — Persistent data (recent files, bookmarks, preferences)
-- **Theme Manager** — Dark/light theme switching
-- **Configuration Manager** — User settings
+### 4. Core Services (Phase 3 ✅)
+Modular singleton services in `src/services/`:
+
+- **EventBus** (`eventBus.ts`) — Pub/sub pattern for cross-component communication
+  - Methods: `on(event, handler)`, `off(event, handler)`, `emit(event, data)`, `clear(event?)`
+  - Event constants: `DOCUMENT_OPENED`, `DOCUMENT_CLOSED`, `PAGE_CHANGED`, `ZOOM_CHANGED`, `THEME_CHANGED`, `SEARCH_QUERY`, `SIDEBAR_TOGGLE`, `STATUS_UPDATE`
+
+- **StorageManager** (`storageManager.ts`) — Persistent data via localStorage
+  - Prefix: `aepdf_` (avoids conflicts)
+  - Methods: `get(key, default)`, `set(key, value)`, `remove(key)`, `clear()`
+  - Recent files: `getRecentFiles()`, `addRecentFile(path, name)`, `removeRecentFile(path)`, `clearRecentFiles()`
+
+- **ThemeManager** (`themeManager.ts`) — Dark/light theme with persistence
+  - Methods: `getTheme()`, `setTheme(theme)`, `toggleTheme()`
+  - Persists to localStorage, auto-applies on load
+  - Emits `THEME_CHANGED` event via EventBus
+
+- **ConfigurationManager** (`configManager.ts`) — Default config + user overrides
+  - Interface: `AppConfig` (zoom, sidebar, page view, search, session settings)
+  - Methods: `get(key)`, `set(key, value)`, `getAll()`, `update(updates)`, `reset()`
+  - Merges `DEFAULT_CONFIG` with saved user preferences
 
 ### 5. CSInterface Bridge
 The communication layer between React (web) and ExtendScript (host). Uses `CSInterface.evalScript()` to call ExtendScript functions.
