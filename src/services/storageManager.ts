@@ -146,12 +146,104 @@ class StorageManager {
   clearRecentFiles(): void {
     this.remove('recentFiles');
   }
+
+  // ===== Page Bookmarks =====
+
+  getBookmarks(filePath: string): PageBookmark[] {
+    const normalizedPath = this.normalizePath(filePath);
+    const bookmarks = this.get<PageBookmark[]>('bookmarks', []) || [];
+    return bookmarks
+      .filter((bookmark) => this.normalizePath(bookmark.filePath) === normalizedPath)
+      .sort((first, second) => first.page - second.page);
+  }
+
+  addBookmark(filePath: string, fileName: string, page: number, label?: string): PageBookmark {
+    const bookmarks = this.get<PageBookmark[]>('bookmarks', []) || [];
+    const normalizedPath = this.normalizePath(filePath);
+    const existing = bookmarks.find(
+      (bookmark) => this.normalizePath(bookmark.filePath) === normalizedPath && bookmark.page === page
+    );
+    if (existing) return existing;
+
+    const bookmark: PageBookmark = {
+      id: `${normalizedPath}::${page}`,
+      filePath,
+      fileName,
+      page,
+      label: label?.trim() || `Page ${page}`,
+      createdAt: Date.now(),
+    };
+    bookmarks.push(bookmark);
+    this.set('bookmarks', bookmarks);
+    return bookmark;
+  }
+
+  removeBookmark(filePath: string, page: number): void {
+    const normalizedPath = this.normalizePath(filePath);
+    const bookmarks = this.get<PageBookmark[]>('bookmarks', []) || [];
+    this.set('bookmarks', bookmarks.filter(
+      (bookmark) => !(this.normalizePath(bookmark.filePath) === normalizedPath && bookmark.page === page)
+    ));
+  }
+
+  removeBookmarksAfterPage(filePath: string, lastPage: number): void {
+    const normalizedPath = this.normalizePath(filePath);
+    const bookmarks = this.get<PageBookmark[]>('bookmarks', []) || [];
+    this.set('bookmarks', bookmarks.filter(
+      (bookmark) => this.normalizePath(bookmark.filePath) !== normalizedPath || bookmark.page <= lastPage
+    ));
+  }
+
+  private normalizePath(path: string): string {
+    return path.replace(/\//g, '\\').toLowerCase();
+  }
+
+  // ===== Last Session =====
+
+  getLastSession(): PdfSession | null {
+    const session = this.get<PdfSession>('lastSession');
+    if (!session || session.version !== 1 || !session.filePath || !session.fileName) {
+      return null;
+    }
+    return session;
+  }
+
+  saveLastSession(session: Omit<PdfSession, 'version' | 'savedAt'>): void {
+    this.set<PdfSession>('lastSession', {
+      version: 1,
+      ...session,
+      savedAt: Date.now(),
+    });
+  }
+
+  clearLastSession(): void {
+    this.remove('lastSession');
+  }
 }
 
 export interface RecentFile {
   path: string;
   name: string;
   lastOpened: number;
+}
+
+export interface PdfSession {
+  version: 1;
+  filePath: string;
+  fileName: string;
+  currentPage: number;
+  zoomMode: 'fit' | 'width' | 'custom';
+  zoomLevel: number;
+  savedAt: number;
+}
+
+export interface PageBookmark {
+  id: string;
+  filePath: string;
+  fileName: string;
+  page: number;
+  label: string;
+  createdAt: number;
 }
 
 // Export singleton instance

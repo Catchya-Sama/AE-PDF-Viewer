@@ -50,6 +50,11 @@ AppData/
 .temp/
 .tmp/
 
+# Local test fixtures and one-off migration helpers
+test-files/
+fix-pdf.cjs
+src/services/pdf
+
 # TypeScript build artifacts
 *.tsbuildinfo
 vite.config.d.ts

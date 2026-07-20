@@ -1,6 +1,7 @@
-  import { defineConfig } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
+import { copyFileSync, cpSync } from 'fs';
 
 // Custom plugin: fix script tags for CEP 9 (Chromium 57) compatibility
 // CEP 9 loads from file:// protocol where:
@@ -21,12 +22,37 @@ function fixCepScriptTags() {
   };
 }
 
+// Always pair the bundled PDF.js legacy API with the worker from the exact
+// same installed package version. closeBundle runs after public/ is copied,
+// so it also replaces any stale worker left there by an older build.
+function copyLegacyPdfWorker() {
+  return {
+    name: 'copy-legacy-pdf-worker',
+    closeBundle() {
+      copyFileSync(
+        resolve(__dirname, 'node_modules/pdfjs-dist/legacy/build/pdf.worker.min.js'),
+        resolve(__dirname, 'dist/pdf.worker.min.js'),
+      );
+      cpSync(
+        resolve(__dirname, 'node_modules/pdfjs-dist/cmaps'),
+        resolve(__dirname, 'dist/cmaps'),
+        { recursive: true },
+      );
+      cpSync(
+        resolve(__dirname, 'node_modules/pdfjs-dist/standard_fonts'),
+        resolve(__dirname, 'dist/standard_fonts'),
+        { recursive: true },
+      );
+    },
+  };
+}
+
 // Vite config for CEP 9 (After Effects 2020, Chromium 57)
 // - base: './'  => relative asset paths so the built panel works from any folder
 // - target: 'chrome57' => output JS compatible with CEP 9's embedded Chromium
 // - copyPublicDir: true => copies /public (CSInterface.js, mimetype, fonts) into /dist
 export default defineConfig({
-  plugins: [react(), fixCepScriptTags()],
+  plugins: [react(), fixCepScriptTags(), copyLegacyPdfWorker()],
   base: './',
   resolve: {
     alias: {

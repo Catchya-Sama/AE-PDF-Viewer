@@ -29,7 +29,7 @@ export function Footer({
       <div className="footer-right">
         <span>{hasDocument ? `${zoomLevel}%` : ''}</span>
         <div className="footer-status">
-          <span className={`status-dot ${status === 'idle' ? 'idle' : ''}`} />
+          <span className={`status-dot ${status}`} />
           <span>{statusMessage || status}</span>
         </div>
       </div>

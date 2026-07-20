@@ -6,13 +6,13 @@
 |-------|------|--------|------|
 | 0 | Research | ✅ Done | Inspirasi, blueprint, arsitektur, referensi |
 | 1 | Project Initialization | ✅ Done | Project bisa di-build & jalan di AE |
-| 2 | UI Prototype | ⬜ | 100% visual, 0% function |
-| 3 | Core Architecture | ⬜ | Pondasi modular (Core, Storage, Theme, dll) |
-| 4 | PDF Engine | ⬜ | Open, render, zoom, search, thumbnail |
-| 5 | After Effects Bridge | ⬜ | CSInterface + ExtendScript integration |
-| 6 | Storage | ⬜ | Recent files, bookmarks, favorites |
-| 7 | Settings | ⬜ | Theme, language, zoom default |
-| 8 | Optimization | ⬜ | Cache, lazy load, memory, performance |
+| 2 | UI Prototype | ✅ Done | UI panel responsif dan theme |
+| 3 | Core Architecture | ✅ Done | Services, EventBus, Config, Storage |
+| 4 | PDF Engine | ✅ Done | Open, render, zoom, search, thumbnail |
+| 5 | After Effects Bridge | ✅ Done | CSInterface, file dialog, session restore |
+| 6 | Storage | ✅ Done | Recent files, bookmarks, preferences |
+| 7 | Settings | ✅ Done | Theme, viewer behavior, sidebar |
+| 8 | Optimization | 🚧 Next | Cache, lazy load, memory, performance |
 | 9 | Packaging | ⬜ | ZXP package, install, testing |
 
 ---
@@ -50,7 +50,7 @@
 
 ---
 
-## Phase 2 — UI Prototype ⬜
+## Phase 2 — UI Prototype ✅
 
 **Goal:**
 - ✔ UI selesai
@@ -59,17 +59,17 @@
 - ✔ Animation
 
 **Tasks:**
-- [ ] 011 — Header (logo + title + window controls)
-- [ ] 012 — Sidebar (thumbnails list — dummy)
-- [ ] 013 — Toolbar (Open, Zoom, Search, Page nav — dummy)
-- [ ] 014 — Workspace (canvas area — empty state)
-- [ ] 015 — Footer (page info, status)
-- [ ] 016 — Theme system (dark/light CSS variables)
-- [ ] 017 — Responsive layout + animation transitions
+- [x] 011 — Header and panel controls
+- [x] 012 — Sidebar thumbnails + hide/show
+- [x] 013 — Functional toolbar
+- [x] 014 — Canvas workspace and empty state
+- [x] 015 — Footer status
+- [x] 016 — Persistent dark/light theme
+- [x] 017 — Responsive layout
 
 ---
 
-## Phase 3 — Core Architecture ⬜
+## Phase 3 — Core Architecture ✅
 
 **Goal:**
 - ✔ Core selesai
@@ -88,7 +88,7 @@
 
 ---
 
-## Phase 4 — PDF Engine ⬜
+## Phase 4 — PDF Engine ✅
 
 **Goal:**
 - ✔ PDF bisa dibuka
@@ -105,7 +105,7 @@ Open PDF → Render → Thumbnail → Zoom → Search
 
 ---
 
-## Phase 5 — After Effects Bridge ⬜
+## Phase 5 — After Effects Bridge ✅
 
 **Goal:**
 - ✔ Open Project
@@ -121,37 +121,36 @@ Open Project → Remember PDF → Restore Session
 
 ---
 
-## Phase 6 — Storage ⬜
+## Phase 6 — Storage ✅
 
 **Features:**
 - Recent Files
 - Bookmark
-- Favorite
 - Last Page
-- Recent Folder
+- Zoom and viewer session
+- Sidebar visibility
 
 ---
 
-## Phase 7 — Settings ⬜
+## Phase 7 — Settings ✅
 
 **Options:**
-- Dark Theme
-- Light Theme
-- Language
-- Zoom Default
-- Thumbnail Width
-- Animation Speed
+- Theme
+- Restore last session
+- Zoom step
+- Sidebar width
+- Reset preferences
 
 ---
 
-## Phase 8 — Optimization ⬜
+## Phase 8 — Optimization 🚧
 
 **Focus:**
-- ✔ Cache
-- ✔ Lazy Load
-- ✔ Memory
-- ✔ Resize
-- ✔ Performance
+- [ ] Thumbnail lazy rendering
+- [ ] Thumbnail cache
+- [ ] PDF render cancellation and cleanup
+- [ ] Memory profiling
+- [ ] Performance regression testing
 
 ---
 
@@ -160,3 +159,4 @@ Open Project → Remember PDF → Restore Session
 **Flow:**
 ```
 vite build → ZXP Package → Install → Testing
+```
