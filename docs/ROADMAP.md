@@ -6,7 +6,7 @@
 
 ## Project Status
 
-> 🚧 Active Development (Phase 8)
+> ✅ v1.0.0 Released — all planned phases complete
 
 Current progress:
 
@@ -20,7 +20,8 @@ Current progress:
 * ✅ Adobe bridge and session restore
 * ✅ Recent files and page bookmarks
 * ✅ Settings UI
-* ⏳ Performance optimization
+* ✅ Performance optimization
+* ✅ Packaging and release validation
 
 ---
 
@@ -86,14 +87,17 @@ Current progress:
 * Appearance
 * Viewer configuration
 
-### Phase 8 — Optimization 🚧
+### Phase 8 — Optimization ✅
 
 * Performance improvements
 * Memory optimization
-* Lazy loading
-* Render optimization
+* Lazy thumbnail loading ✅
+* Render cancellation and adaptive text quality ✅
+* Search cancellation and per-document text cache ✅
+* Canvas memory cap and cleanup ✅
+* After Effects 2020 regression testing ✅
 
-### Phase 9 — Packaging ⬜
+### Phase 9 — Packaging ✅
 
 * Production build
 * ZXP packaging

@@ -12,8 +12,8 @@
 | 5 | After Effects Bridge | ✅ Done | CSInterface, file dialog, session restore |
 | 6 | Storage | ✅ Done | Recent files, bookmarks, preferences |
 | 7 | Settings | ✅ Done | Theme, viewer behavior, sidebar |
-| 8 | Optimization | 🚧 Next | Cache, lazy load, memory, performance |
-| 9 | Packaging | ⬜ | ZXP package, install, testing |
+| 8 | Optimization | ✅ Done | Cache, lazy load, memory, performance |
+| 9 | Packaging | ✅ Done | ZIP/ZXP package, verification, checksums |
 
 ---
 
@@ -143,20 +143,29 @@ Open Project → Remember PDF → Restore Session
 
 ---
 
-## Phase 8 — Optimization 🚧
+## Phase 8 — Optimization ✅
 
 **Focus:**
-- [ ] Thumbnail lazy rendering
-- [ ] Thumbnail cache
-- [ ] PDF render cancellation and cleanup
-- [ ] Memory profiling
-- [ ] Performance regression testing
+- [x] Thumbnail lazy rendering
+- [x] Bounded thumbnail LRU cache
+- [x] Thumbnail render queue and document-switch cancellation
+- [x] PDF render cancellation, cleanup, and stale-overlay protection
+- [x] Adaptive text supersampling for small fallback fonts
+- [x] Search cancellation and per-document text cache
+- [x] Memory safeguards (bounded LRU, 16 MP canvas cap, surface cleanup)
+- [x] Performance regression testing in After Effects 2020
 
 ---
 
-## Phase 9 — Packaging ⬜
+## Phase 9 — Packaging ✅
 
 **Flow:**
 ```
 vite build → ZXP Package → Install → Testing
 ```
+
+- [x] Production build
+- [x] Clean manual-install ZIP payload
+- [x] Signed ZXP package
+- [x] Signature and archive verification
+- [x] SHA-256 checksums and Windows installation guide
