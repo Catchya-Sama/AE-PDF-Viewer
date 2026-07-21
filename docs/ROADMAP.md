@@ -6,7 +6,7 @@
 
 ## Project Status
 
-> ✅ v1.0.0 Released — all planned phases complete
+> ✅ v1.0.1 Released — creator attribution maintenance release
 
 Current progress:
 
@@ -22,6 +22,7 @@ Current progress:
 * ✅ Settings UI
 * ✅ Performance optimization
 * ✅ Packaging and release validation
+* ✅ Creator attribution and direct Instagram profile access
 
 ---
 
@@ -103,6 +104,13 @@ Current progress:
 * ZXP packaging
 * Testing
 * Release
+
+### Maintenance Release — v1.0.1 ✅
+
+* About the Creator header action
+* Centered creator profile modal
+* CEP browser integration for [@notcatchya](https://www.instagram.com/notcatchya)
+* Versioned ZIP and signed ZXP packages
 
 ---
 

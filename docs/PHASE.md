@@ -14,6 +14,7 @@
 | 7 | Settings | ✅ Done | Theme, viewer behavior, sidebar |
 | 8 | Optimization | ✅ Done | Cache, lazy load, memory, performance |
 | 9 | Packaging | ✅ Done | ZIP/ZXP package, verification, checksums |
+| 10 | v1.0.1 Maintenance | ✅ Done | Creator attribution, docs, and refreshed packages |
 
 ---
 
@@ -169,3 +170,13 @@ vite build → ZXP Package → Install → Testing
 - [x] Signed ZXP package
 - [x] Signature and archive verification
 - [x] SHA-256 checksums and Windows installation guide
+
+---
+
+## Phase 10 — v1.0.1 Maintenance ✅
+
+- [x] Add an About the Creator action to the header
+- [x] Add a centered creator modal for `notcatchya`
+- [x] Open [@notcatchya](https://www.instagram.com/notcatchya) through the CEP default-browser API
+- [x] Support `OK`, backdrop click, and `Escape` dismissal
+- [x] Refresh documentation, ZIP, signed ZXP, verification, and checksums for v1.0.1

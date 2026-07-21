@@ -1,4 +1,4 @@
-# PDF Viewer v1.0.0 — Windows Installation
+# PDF Viewer v1.0.1 — Windows Installation
 
 ## Requirements
 
@@ -10,7 +10,7 @@
 
 1. Close After Effects.
 2. Open a CEP-compatible ZXP installer, such as ZXP/UXP Installer or Anastasiy's Extension Manager.
-3. Select `PDF-Viewer-v1.0.0.zxp` and complete the installation.
+3. Select `PDF-Viewer-v1.0.1.zxp` and complete the installation.
 4. Restart After Effects.
 5. Open `Window > Extensions > PDF Viewer`.
 
@@ -21,7 +21,7 @@ confirm the publisher name and continue only when the package came from the expe
 ## Option B — Install the ZIP manually
 
 1. Close After Effects.
-2. Extract `PDF-Viewer-v1.0.0-Windows.zip`.
+2. Extract `PDF-Viewer-v1.0.1-Windows.zip`.
 3. Copy the extracted `com.catchya.pdfviewer` folder to:
 
    ```text
@@ -47,8 +47,8 @@ confirm the publisher name and continue only when the package came from the expe
 Compare the SHA-256 values of the downloaded files with `SHA256SUMS.txt`:
 
 ```powershell
-Get-FileHash .\PDF-Viewer-v1.0.0-Windows.zip -Algorithm SHA256
-Get-FileHash .\PDF-Viewer-v1.0.0.zxp -Algorithm SHA256
+Get-FileHash .\PDF-Viewer-v1.0.1-Windows.zip -Algorithm SHA256
+Get-FileHash .\PDF-Viewer-v1.0.1.zxp -Algorithm SHA256
 ```
 
 ## Known limitations

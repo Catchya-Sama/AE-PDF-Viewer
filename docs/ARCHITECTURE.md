@@ -60,6 +60,7 @@ The UI layer. Built with React + TypeScript + Vite. Handles:
 - User interactions
 - State management
 - Theme system
+- Creator attribution modal and external-profile action
 
 ### 4. Core Services (Phase 3 ✅)
 Modular singleton services in `src/services/`:
@@ -92,7 +93,7 @@ Modular singleton services in `src/services/`:
   - Full-text search across all pages
 
 ### 5. CSInterface Bridge
-The communication layer between React (web) and ExtendScript (host). Uses `CSInterface.evalScript()` to call ExtendScript functions.
+The communication layer between React (web) and ExtendScript (host). Uses `CSInterface.evalScript()` to call ExtendScript functions and `CSInterface.openURLInDefaultBrowser()` for trusted external profile links.
 
 ### 6. ExtendScript
 Adobe's scripting language (ES3-based). Runs in the host application's ExtendScript engine. Provides access to:

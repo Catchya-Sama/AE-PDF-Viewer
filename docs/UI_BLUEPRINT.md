@@ -14,7 +14,7 @@
 
 ```text
 ┌─────────────────────────────────────────────────┐
-│ Header (40px) — Logo + Title + Theme toggle    │
+│ Header (40px) — Logo + Title + Theme + About   │
 ├──────────┬──────────────────────────────────────┤
 │          │ Toolbar (44px) — Open, Page, Zoom, Search │
 │ Sidebar  ├──────────────────────────────────────┤
@@ -34,7 +34,15 @@
 - **Logo**: Blue square with "P" letter
 - **Title**: "PDF Viewer"
 - **Theme toggle**: Sun/moon icon button
-- **Props**: `onToggleTheme`, `theme`
+- **About Creator**: Info button before Settings; opens the creator modal
+- **Props**: `onToggleTheme`, `onToggleSidebar`, `onOpenCreator`, `onOpenSettings`, `theme`, `sidebarVisible`
+
+### Creator Modal (`src/components/CreatorModal.tsx`)
+- **Layout**: Fully centered title, product name, creator name, Instagram handle, and actions
+- **Creator**: `notcatchya`
+- **Open Instagram**: Uses the CEP default-browser API to open [@notcatchya](https://www.instagram.com/notcatchya)
+- **Dismissal**: `OK`, backdrop click, or `Escape`
+- **Theme**: Uses the shared dark/light CSS variables
 
 ### Sidebar (`src/components/Sidebar.tsx`)
 - **Header**: Shows page count or "No Document"

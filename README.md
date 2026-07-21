@@ -18,11 +18,11 @@ This project is built with scalability in mind. Rather than being a simple PDF v
 
 ## Documentation
 
-### v1.0.0 release documentation
+### v1.0.1 release documentation
 
 | Document | Release summary |
 |----------|-----------------|
-| [Changelog](docs/CHANGELOG.md) | Features, improvements, and fixes included in v1.0.0 |
+| [Changelog](docs/CHANGELOG.md) | Features, improvements, and fixes included in v1.0.1 |
 | [Phase Tracker](docs/PHASE.md) | Completion details for development phases 0–9 |
 | [Roadmap](docs/ROADMAP.md) | Stable-release status and completed project milestones |
 | [Windows Installation](docs/INSTALL-WINDOWS.md) | ZXP/ZIP installation, checksum verification, known limitations, and uninstall steps |
@@ -41,7 +41,7 @@ This project is built with scalability in mind. Rather than being a simple PDF v
 
 ## Project Status
 
-> ✅ Stable Release — v1.0.0
+> ✅ Stable Release — v1.0.1
 
 * ✅ Project initialization
 * ✅ Repository structure
@@ -51,6 +51,7 @@ This project is built with scalability in mind. Rather than being a simple PDF v
 * ✅ PDF rendering, thumbnails, zoom, bookmarks, and session restore
 * ✅ Search results with accurate page-canvas highlights
 * ✅ Selectable PDF text and After Effects text-layer workflows
+* ✅ Creator attribution modal with direct Instagram link to [@notcatchya](https://www.instagram.com/notcatchya)
 * ✅ ZIP and signed ZXP distribution
 
 See [Roadmap](docs/ROADMAP.md) for full details.
@@ -80,10 +81,10 @@ See [Architecture](docs/ARCHITECTURE.md) for full details.
 
 ### Installation
 
-For release users, use one of the packages in `release/v1.0.0`:
+For release users, download one of the packages attached to the [v1.0.1 GitHub Release](https://github.com/Catchya-Sama/AE-PDF-Viewer/releases/tag/v1.0.1):
 
-- `PDF-Viewer-v1.0.0.zxp` for installation with a ZXP installer.
-- `PDF-Viewer-v1.0.0-Windows.zip` for manual CEP installation.
+- `PDF-Viewer-v1.0.1.zxp` for installation with a ZXP installer.
+- `PDF-Viewer-v1.0.1-Windows.zip` for manual CEP installation.
 
 See the [Windows installation guide](docs/INSTALL-WINDOWS.md) for complete ZXP and ZIP instructions.
 
@@ -108,10 +109,11 @@ npm run copy-cep
 
 1. Open After Effects
 2. Go to `Window > Extensions > PDF Viewer`
-3. Open a PDF and select text directly on the rendered page
-4. Press `Ctrl+C` for normal system clipboard use
-5. Use `To AE` to append the copied PDF text to exactly one selected AE text layer; one space is inserted only when the text boundaries need it
-6. Use `Paste as Text Layer` to create a new default-styled text layer:
+3. Use the **ⓘ** button in the header to view the creator profile and open [@notcatchya](https://www.instagram.com/notcatchya) in your default browser
+4. Open a PDF and select text directly on the rendered page
+5. Press `Ctrl+C` for normal system clipboard use
+6. Use `To AE` to append the copied PDF text to exactly one selected AE text layer; one space is inserted only when the text boundaries need it
+7. Use `Paste as Text Layer` to create a new default-styled text layer:
    - centered in the active composition
    - beginning at the current composition time
    - immediately above the topmost selected timeline layer, or at the top when none is selected

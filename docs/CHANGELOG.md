@@ -13,6 +13,19 @@ No changes yet.
 
 ---
 
+## [1.0.1] — 2026-07-21
+
+### Added
+- Header **About the Creator** button for visible creator attribution
+- Centered creator modal identifying `notcatchya` as the PDF Viewer creator
+- Direct Instagram action for opening [@notcatchya](https://www.instagram.com/notcatchya) in the system default browser through the CEP API
+- Keyboard and backdrop dismissal for the creator modal, including `Escape` and an explicit `OK` button
+
+### Changed
+- Package, manifest, installer documentation, and release artifacts updated to version `1.0.1`
+
+---
+
 ## [1.0.0] — 2026-07-21
 
 ### Added
