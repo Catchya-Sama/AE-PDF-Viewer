@@ -51,7 +51,7 @@ This project is built with scalability in mind. Rather than being a simple PDF v
 * ✅ PDF rendering, thumbnails, zoom, bookmarks, and session restore
 * ✅ Search results with accurate page-canvas highlights
 * ✅ Selectable PDF text and After Effects text-layer workflows
-* ✅ Creator attribution modal with direct Instagram link to [@notcatchya](https://www.instagram.com/notcatchya)
+* ✅ Creator attribution modal with direct Instagram link to
 * ✅ ZIP and signed ZXP distribution
 
 See [Roadmap](docs/ROADMAP.md) for full details.
