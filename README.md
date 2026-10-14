@@ -109,7 +109,7 @@ npm run copy-cep
 
 1. Open After Effects
 2. Go to `Window > Extensions > PDF Viewer`
-3. Use the **ⓘ** button in the header to view the creator profile and open [@notcatchya](https://www.instagram.com/notcatchya) in your default browser
+3. Use the **ⓘ** button in the header to view the creator profile and open [@put.adly](https://www.instagram.com/put.adly) in your default browser
 4. Open a PDF and select text directly on the rendered page
 5. Press `Ctrl+C` for normal system clipboard use
 6. Use `To AE` to append the copied PDF text to exactly one selected AE text layer; one space is inserted only when the text boundaries need it
