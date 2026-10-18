@@ -18,7 +18,7 @@ No changes yet.
 ### Added
 - Header **About the Creator** button for visible creator attribution
 - Centered creator modal identifying `notcatchya` as the PDF Viewer creator
-- Direct Instagram action for opening [@notcatchya](https://www.instagram.com/notcatchya) in the system default browser through the CEP API
+- Direct Instagram action for opening [@put.adly](https://www.instagram.com/put.adly) in the system default browser through the CEP API
 - Keyboard and backdrop dismissal for the creator modal, including `Escape` and an explicit `OK` button
 
 ### Changed
